@@ -1,4 +1,5 @@
 # Check CPU Utilization
+echo "=======================" >> system_status.txt
 echo "CPU Utilization:" >> system_status.txt
 mpstat 1 1 | awk 'NR==4 {print "Average CPU Usage: " 100-$NF "%"}' >> system_status.txt
 
