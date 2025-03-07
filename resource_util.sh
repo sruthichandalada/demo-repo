@@ -19,4 +19,3 @@ echo "Top 5 processes by CPU Usage:" >> system_status.txt
 ps -eo pid,ppid,cmd,%cpu,%mem --sort=-%cpu | head -n 6 >> system_status.txt
 echo "===========================" >> system_status.txt
 cat system_status.txt
-echo "Hi"
