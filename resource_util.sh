@@ -1,3 +1,5 @@
+hostname=$1
+env=$2
 # Check CPU Utilization
 echo "=======================" >> system_status.txt
 echo "CPU Utilization:" >> system_status.txt
