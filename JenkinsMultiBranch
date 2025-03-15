@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+        options {
+          retry(2)
+          timestamps()
+    }
+    triggers {
+        pollSCM('H 2 * * 6')
+    }
+    parameters {
+ 	string defaultValue: 'MR.jenkins', name: 'USER_ID'
+	booleanParam defaultValue: true, name: 'TOGGLE'
+	choice choices: ['DEV', 'TEST', 'PROD'], name: 'ENV'
+    }     
+    stages {
+      stage('checkout-stage') {
+          steps {
+          echo "This is checkout stage"
+          echo "Running the job : ${env.JOB_NAME} having build number ${env.BUILD_ID}"
+	      echo "Parameter value of USER_ID is : ${params.USER_ID}"
+          }
+   }
+
+    stage('test-stage') {
+         steps {
+         echo 'This is a test stage and is taken care while building an artifact'
+         echo "Value of Boolean parameter : ${params.TOGGLE}"
+         }
+     }
+
+    stage('build-stage') {
+        steps {
+        echo "This is build stage"
+        echo "Value of choice parameter : ${params.ENV}"
+        }
+    }
+
+    stage('deploy-stage') {
+	input {
+	    message 'hi there! wanna continue'
+            ok 'Would you like to continue'
+       	}
+        steps {
+        echo "This is deploy stage"
+        }
+    }
+  }
+}
